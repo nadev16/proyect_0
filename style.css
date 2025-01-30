@@ -1,0 +1,63 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.container {
+  display: flex;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.activities {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ccc;
+}
+
+.activity {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  width: 120px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  text-align: center;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.days .cell {
+  font-weight: bold;
+  background-color: #e0e0e0;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  cursor: pointer;
+}
