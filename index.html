@@ -1,49 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link type="text/css" rel="stylesheet" href="style.css"/>
-  </head>
-  <body>
-    <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla de Actividades Semanales</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .week-navigation {
-            margin-bottom: 20px;
-        }
-        .week-navigation button {
-            padding: 5px 10px;
-            margin-right: 10px;
-        }
-        .delete-button {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .delete-button:hover {
-            background-color: #cc0000;
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="style.css"/>
+        <title>Tabla de Actividades Semanales</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #000;
+                padding: 8px;
+                text-align: center;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .week-navigation {
+                margin-bottom: 20px;
+            }
+            .week-navigation button {
+                padding: 5px 10px;
+                margin-right: 10px;
+            }
+            .delete-button {
+                background-color: #ff4d4d;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+            .delete-button:hover {
+                background-color: #cc0000;
+            }
+        </style>
+    </head>
 <body>
-
+    <script type="module" src="script.js"></script>
     <div class="week-navigation">
         <button onclick="changeWeek(-1)">Semana Anterior</button>
         <span id="current-week">Semana 1</span>
@@ -160,9 +155,6 @@
             renderTable();
         }
     </script>
-
-</body>
-</html>
     <script type="module" src="script.js"></script>
   </body>
 </html>
