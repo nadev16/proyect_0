@@ -7,80 +7,160 @@
     <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabla de Actividades</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Actividades Semanales</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .week-navigation {
+            margin-bottom: 20px;
+        }
+        .week-navigation button {
+            padding: 5px 10px;
+            margin-right: 10px;
+        }
+        .delete-button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #cc0000;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Columna de actividades XD -->
 
-    <!-- Tabla de días y checkboxes -->
-    <div class="table">
-      <!-- Días de la semana -->
-      <div class="row days">
-        <div class="cell"></div> <!-- Celda vacía para alinear -->
-        <div class="cell">Lunes</div>
-        <div class="cell">Martes</div>
-        <div class="cell">Miércoles</div>
-        <div class="cell">Jueves</div>
-        <div class="cell">Viernes</div>
-      </div>
-
-      <!-- Filas de actividades y checkboxes -->
-      <div class="row" data-activity="Actividad 1">
-        <div class="cell activity">Actividad 1</div>
-        <div class="cell"><input type="checkbox" data-day="Lunes"></div>
-        <div class="cell"><input type="checkbox" data-day="Martes"></div>
-        <div class="cell"><input type="checkbox" data-day="Miércoles"></div>
-        <div class="cell"><input type="checkbox" data-day="Jueves"></div>
-        <div class="cell"><input type="checkbox" data-day="Viernes"></div>
-      </div>
-      <div class="row" data-activity="Actividad 2">
-        <div class="cell activity">Actividad 2</div>
-        <div class="cell"><input type="checkbox" data-day="Lunes"></div>
-        <div class="cell"><input type="checkbox" data-day="Martes"></div>
-        <div class="cell"><input type="checkbox" data-day="Miércoles"></div>
-        <div class="cell"><input type="checkbox" data-day="Jueves"></div>
-        <div class="cell"><input type="checkbox" data-day="Viernes"></div>
-      </div>
-      <div class="row" data-activity="Actividad 3">
-        <div class="cell activity">Actividad 3</div>
-        <div class="cell"><input type="checkbox" data-day="Lunes"></div>
-        <div class="cell"><input type="checkbox" data-day="Martes"></div>
-        <div class="cell"><input type="checkbox" data-day="Miércoles"></div>
-        <div class="cell"><input type="checkbox" data-day="Jueves"></div>
-        <div class="cell"><input type="checkbox" data-day="Viernes"></div>
-      </div>
-      <div class="row" data-activity="Actividad 4">
-        <div class="cell activity">Actividad 4</div>
-        <div class="cell"><input type="checkbox" data-day="Lunes"></div>
-        <div class="cell"><input type="checkbox" data-day="Martes"></div>
-        <div class="cell"><input type="checkbox" data-day="Miércoles"></div>
-        <div class="cell"><input type="checkbox" data-day="Jueves"></div>
-        <div class="cell"><input type="checkbox" data-day="Viernes"></div>
-      </div>
-      <div class="row" data-activity="Actividad 5">
-        <div class="cell activity">Actividad 5</div>
-        <div class="cell"><input type="checkbox" data-day="Lunes"></div>
-        <div class="cell"><input type="checkbox" data-day="Martes"></div>
-        <div class="cell"><input type="checkbox" data-day="Miércoles"></div>
-        <div class="cell"><input type="checkbox" data-day="Jueves"></div>
-        <div class="cell"><input type="checkbox" data-day="Viernes"></div>
-      </div>
-      <div class="row" data-activity="Actividad 6">
-        <div class="cell activity">Actividad 6</div>
-        <div class="cell"><input type="checkbox" data-day="Lunes"></div>
-        <div class="cell"><input type="checkbox" data-day="Martes"></div>
-        <div class="cell"><input type="checkbox" data-day="Miércoles"></div>
-        <div class="cell"><input type="checkbox" data-day="Jueves"></div>
-        <div class="cell"><input type="checkbox" data-day="Viernes"></div>
-      </div>
+    <div class="week-navigation">
+        <button onclick="changeWeek(-1)">Semana Anterior</button>
+        <span id="current-week">Semana 1</span>
+        <button onclick="changeWeek(1)">Siguiente Semana</button>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <table id="activity-table">
+        <thead>
+            <tr>
+                <th>Actividades</th>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de actividades se generarán dinámicamente -->
+        </tbody>
+    </table>
+
+    <button onclick="addActivity()">Agregar Actividad</button>
+
+    <script>
+        let currentWeek = 1;
+        const activities = [];
+
+        // Cargar datos guardados al iniciar
+        loadData();
+
+        function loadData() {
+            const savedData = localStorage.getItem('weeklyActivities');
+            if (savedData) {
+                activities.length = 0; // Limpiar el array
+                activities.push(...JSON.parse(savedData));
+            }
+            renderTable();
+        }
+
+        function saveData() {
+            localStorage.setItem('weeklyActivities', JSON.stringify(activities));
+        }
+
+        function renderTable() {
+            const tbody = document.querySelector('#activity-table tbody');
+            tbody.innerHTML = ''; // Limpiar la tabla
+
+            activities.forEach((activity, index) => {
+                const row = document.createElement('tr');
+                const activityCell = document.createElement('td');
+                activityCell.textContent = activity.name;
+                row.appendChild(activityCell);
+
+                for (let day = 0; day < 7; day++) {
+                    const checkboxCell = document.createElement('td');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = activity.weeks[currentWeek] ? activity.weeks[currentWeek][day] : false;
+                    checkbox.addEventListener('change', () => {
+                        if (!activity.weeks[currentWeek]) {
+                            activity.weeks[currentWeek] = [false, false, false, false, false, false, false];
+                        }
+                        activity.weeks[currentWeek][day] = checkbox.checked;
+                        saveData();
+                    });
+                    checkboxCell.appendChild(checkbox);
+                    row.appendChild(checkboxCell);
+                }
+
+                // Botón para eliminar la actividad
+                const deleteCell = document.createElement('td');
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Eliminar';
+                deleteButton.classList.add('delete-button');
+                deleteButton.addEventListener('click', () => {
+                    deleteActivity(index);
+                });
+                deleteCell.appendChild(deleteButton);
+                row.appendChild(deleteCell);
+
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('current-week').textContent = `Semana ${currentWeek}`;
+        }
+
+        function addActivity() {
+            const activityName = prompt("Nombre de la actividad:");
+            if (activityName) {
+                activities.push({
+                    name: activityName,
+                    weeks: {}
+                });
+                saveData();
+                renderTable();
+            }
+        }
+
+        function deleteActivity(index) {
+            if (confirm("¿Estás seguro de que quieres eliminar esta actividad?")) {
+                activities.splice(index, 1); // Eliminar la actividad del array
+                saveData();
+                renderTable();
+            }
+        }
+
+        function changeWeek(offset) {
+            currentWeek += offset;
+            if (currentWeek < 1) currentWeek = 1;
+            renderTable();
+        }
+    </script>
+
 </body>
 </html>
     <script type="module" src="script.js"></script>
